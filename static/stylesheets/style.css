@@ -551,6 +551,12 @@ p.card-bio {
 
 /* ================================profile header */
 
-#profile-header{
+/* /* #profile-header{
     object-fit:contain;
-}
+} */
+
+.fit-image{
+  width: 100%;
+  object-fit: cover;
+  height: 400px; /* only if you want fixed height */
+} 
