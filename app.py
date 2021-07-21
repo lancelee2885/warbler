@@ -112,8 +112,13 @@ def login():
 @app.route('/logout')
 def logout():
     """Handle logout of user."""
-
-
+    
+    user= User.query.get_or_404(session[CURR_USER_KEY])
+    
+    flash(f"{user.username} has logged out")
+    
+    do_logout()
+    
     return redirect("/login")
 
 
