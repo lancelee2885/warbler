@@ -556,3 +556,8 @@ p.card-bio {
   object-fit: cover;
   height: 400px; /* only if you want fixed height */
 } 
+
+.like-button{
+    background: none; 
+    border: none;
+}

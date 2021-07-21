@@ -177,23 +177,27 @@ class Message(db.Model):
     )
 
     user = db.relationship('User')
+    
+    def is_liked_by(self, user):
+        """check whether the message is liked by a user"""
+        return user.id in [user.id for user in self.users_like]
 
 
 class Like(db.Model):
-    """ """
+    """Like association between users and messages."""
 
     __tablename__ = 'likes'
 
     user_id = db.Column(
-              db.Integer,
-              db.ForeignKey('users.id', ondelete='CASCADE'),
-              primary_key=True
+        db.Integer,
+        db.ForeignKey('users.id', ondelete='CASCADE'),
+        primary_key=True
     )
 
     message_id = db.Column(
-                 db.Integer,
-                 db.ForeignKey('messages.id', ondelete='CASCADE'),
-                 primary_key=True
+        db.Integer,
+        db.ForeignKey('messages.id', ondelete='CASCADE'),
+        primary_key=True
     )
 
     

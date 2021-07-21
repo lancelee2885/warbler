@@ -23,7 +23,14 @@
         <p>{{ message.text }}</p>
       </div>
       {% if g.user.id != message.user.id %}
-      <i class="far fa-thumbs-up"></i>
+        <form action="/messages/{{message.id}}/like" method="POST">
+          
+          {% if message.is_liked_by(g.user) %}
+          <button class="like-button"><i class="fas fa-thumbs-up"></i></button>
+          {% else %}
+          <button class="like-button"><i class="far fa-thumbs-up"></i></button>
+          {% endif %}
+        </form>
       {% endif %}
     </li>
 

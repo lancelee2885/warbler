@@ -146,9 +146,12 @@ def list_users():
 @app.route('/users/<int:user_id>')
 def users_show(user_id):
     """Show user profile."""
-
+    
     user = User.query.get_or_404(user_id)
-
+    
+    # for message in user.messages:
+        # user_likes = [user.id for user in message.users_like]
+    
     return render_template('users/show.html', user=user)
 
 
@@ -293,9 +296,11 @@ def messages_add():
 @app.route('/messages/<int:message_id>', methods=["GET"])
 def messages_show(message_id):
     """Show a message."""
-
+    # breakpoint()
     msg = Message.query.get(message_id)
-    return render_template('messages/show.html', message=msg)
+    # user_likes = [user.id for user in msg.users_like]
+    return render_template('messages/show.html',
+        message=msg)
 
 
 @app.route('/messages/<int:message_id>/delete', methods=["POST"])
