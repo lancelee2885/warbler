@@ -18,7 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 toolbar = DebugToolbarExtension(app)
 
@@ -222,8 +222,8 @@ def profile():
 
         username = form.username.data                   
         email = form.email.data
-        image_url = form.image_url.data
-        header_image_url = form.header_image_url.data
+        image_url = form.image_url.data or User.image_url.default.arg
+        header_image_url = form.header_image_url.data or User.header_image_url.default.arg
         bio = form.bio.data
         password = form.password.data
 
@@ -326,12 +326,11 @@ def homepage():
     """
 
     if g.user:
-        following = [followee.id for followee in g.user.following]
-        following.append(g.user.id)
-        # breakpoint()
+        following_ids = [followee.id for followee in g.user.following]
+        following_ids.append(g.user.id)
         messages = (Message
                     .query
-                    .filter(Message.user_id.in_(following))
+                    .filter(Message.user_id.in_(following_ids))
                     .order_by(Message.timestamp.desc())
                     .limit(100)
                     .all())

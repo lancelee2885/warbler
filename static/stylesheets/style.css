@@ -551,10 +551,6 @@ p.card-bio {
 
 /* ================================profile header */
 
-/* /* #profile-header{
-    object-fit:contain;
-} */
-
 .fit-image{
   width: 100%;
   object-fit: cover;
