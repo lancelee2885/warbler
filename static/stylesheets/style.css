@@ -548,3 +548,9 @@ p.card-bio {
 .message-404 .form-inline input {
   flex: 1;
 }
+
+/* ================================profile header */
+
+#profile-header{
+    object-fit:contain;
+}
