@@ -4,6 +4,7 @@ from datetime import datetime
 
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import backref
 
 bcrypt = Bcrypt()
 db = SQLAlchemy()
@@ -75,10 +76,10 @@ class User(db.Model):
     messages = db.relationship('Message', order_by='Message.timestamp.desc()')
 
     followers = db.relationship(
-        "User",
-        secondary="follows",
-        primaryjoin=(Follows.user_being_followed_id == id),
-        secondaryjoin=(Follows.user_following_id == id)
+        "User", # FROM users
+        secondary="follows", # JOIN follows
+        primaryjoin=(Follows.user_being_followed_id == id), # on user_being_followed_id == id
+        secondaryjoin=(Follows.user_following_id == id) # JOIN follows on user_following_id == id
     )
 
     following = db.relationship(
@@ -87,6 +88,11 @@ class User(db.Model):
         primaryjoin=(Follows.user_following_id == id),
         secondaryjoin=(Follows.user_being_followed_id == id)
     )
+
+    likes = db.relationship(
+        "Message", secondary="likes", backref="users_like"
+    )
+
 
     def __repr__(self):
         return f"<User #{self.id}: {self.username}, {self.email}>"
@@ -98,7 +104,7 @@ class User(db.Model):
         return len(found_user_list) == 1
 
     def is_following(self, other_user):
-        """Is this user following `other_use`?"""
+        """Is this user following `other_user`?"""
 
         found_user_list = [user for user in self.following if user == other_user]
         return len(found_user_list) == 1
@@ -171,6 +177,26 @@ class Message(db.Model):
     )
 
     user = db.relationship('User')
+
+
+class Like(db.Model):
+    """ """
+
+    __tablename__ = 'likes'
+
+    user_id = db.Column(
+              db.Integer,
+              db.ForeignKey('users.id', ondelete='CASCADE'),
+              primary_key=True
+    )
+
+    message_id = db.Column(
+                 db.Integer,
+                 db.ForeignKey('messages.id', ondelete='CASCADE'),
+                 primary_key=True
+    )
+
+    
 
 
 def connect_db(app):

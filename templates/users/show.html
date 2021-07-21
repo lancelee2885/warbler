@@ -1,28 +1,34 @@
 {% extends 'users/detail.html' %}
 {% block user_details %}
-  <div class="col-sm-6">
-    <ul class="list-group" id="messages">
+<div class="col-sm-6">
+  <ul class="list-group" id="messages">
 
-      {% for message in user.messages %}
+    {% for message in user.messages %}
 
-        <li class="list-group-item">
-          <a href="/messages/{{ message.id }}" class="message-link"/>
+    <li class="list-group-item">
 
-          <a href="/users/{{ user.id }}">
-            <img src="{{ user.image_url }}" alt="user image" class="timeline-image">
-          </a>
+      <a href="/messages/{{ message.id }}" class="message-link" />
 
-          <div class="message-area">
-            <a href="/users/{{ user.id }}">@{{ user.username }}</a>
-            <span class="text-muted">
-              {{ message.timestamp.strftime('%d %B %Y') }}
-            </span>
-            <p>{{ message.text }}</p>
-          </div>
-        </li>
+      <div>
+        <a href="/users/{{ user.id }}">
+          <img src="{{ user.image_url }}" alt="user image" class="timeline-image">
+        </a>
+      </div>
 
-      {% endfor %}
+      <div class="message-area">
+        <a href="/users/{{ user.id }}">@{{ user.username }}</a>
+        <span class="text-muted">
+          {{ message.timestamp.strftime('%d %B %Y') }}
+        </span>
+        <p>{{ message.text }}</p>
+      </div>
+      {% if g.user.id != message.user.id %}
+      <i class="far fa-thumbs-up"></i>
+      {% endif %}
+    </li>
 
-    </ul>
-  </div>
+    {% endfor %}
+
+  </ul>
+</div>
 {% endblock %}
