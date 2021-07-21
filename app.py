@@ -326,8 +326,12 @@ def homepage():
     """
 
     if g.user:
+        following = [followee.id for followee in g.user.following]
+        following.append(g.user.id)
+        # breakpoint()
         messages = (Message
                     .query
+                    .filter(Message.user_id.in_(following))
                     .order_by(Message.timestamp.desc())
                     .limit(100)
                     .all())
