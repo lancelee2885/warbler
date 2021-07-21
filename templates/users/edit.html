@@ -14,18 +14,19 @@
           {% for error in field.errors %}
             <span class="text-danger">{{ error }}</span>
           {% endfor %}
+          
           {{ field(placeholder=field.label.text, class="form-control") }}
         {% endfor %}
 
         <p>To confirm changes, enter your password:</p>
-        {% if form.curr_password.errors %}
-          {% for error in form.curr_password.errors %}
+        {% if form.password.errors %}
+          {% for error in form.password.errors %}
             <span class="text-danger">
             {{ error }}
           </span>
           {% endfor %}
         {% endif %}
-        {{ form.curr_password(placeholder="Enter your password to confirm", class="form-control") }}
+        {{ form.password(placeholder="Enter your password to confirm", class="form-control") }}
 
         <div class="edit-btn-area">
           <button class="btn btn-success">Edit this user!</button>

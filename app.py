@@ -225,7 +225,7 @@ def profile():
         image_url = form.image_url.data
         header_image_url = form.header_image_url.data
         bio = form.bio.data
-        password = form.curr_password.data
+        password = form.password.data
 
         if User.authenticate(g.user.username, password):
             
