@@ -26,9 +26,9 @@
         <form action="/messages/{{message.id}}/like" method="POST">
           
           {% if message.is_liked_by(g.user) %}
-          <button class="like-button"><i class="fas fa-thumbs-up"></i></button>
+          <button class="like-button-home"><i class="fas fa-thumbs-up"></i></button>
           {% else %}
-          <button class="like-button"><i class="far fa-thumbs-up"></i></button>
+          <button class="like-button-home"><i class="far fa-thumbs-up"></i></button>
           {% endif %}
         </form>
       {% endif %}

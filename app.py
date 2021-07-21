@@ -213,8 +213,6 @@ def stop_following(follow_id):
 def profile():
     """Update profile for current user."""
 
-    # IMPLEMENT THIS
-
     form = UserEditForm(obj=g.user)
 
     if not g.user:
@@ -255,6 +253,7 @@ def profile():
 def delete_user():
     """Delete user."""
 
+    # Needs CSRF Protection
     if not g.user:
         flash("Access unauthorized.", "danger")
         return redirect("/")
@@ -265,6 +264,15 @@ def delete_user():
     db.session.commit()
 
     return redirect("/signup")
+
+@app.route('/users/<int:user_id>/likes')
+def liked_messages(user_id):
+    """Display all messages that are liked by current user"""
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template('users/likes.html', user=user)
+
 
 
 ##############################################################################
@@ -319,14 +327,24 @@ def messages_destroy(message_id):
 
 
 @app.route('/messages/<int:message_id>/like', methods=["POST"])
-def messages_like(message_id):
-    """Like a message"""
-    
+def message_like_or_unlike(message_id):
+    """Like/Unlike a message"""
+
+    # Needs CSRF Protection
+
+    message = Message.query.get_or_404(message_id)
+
     user_id = g.user.id
 
-    liked_msg = Like(user_id=user_id, message_id=message_id)
-    db.session.add(liked_msg)
-    db.session.commit()
+    if message.is_liked_by(g.user):
+        like = Like.query.get_or_404((user_id, message_id))
+        db.session.delete(like)
+
+    else:
+        liked_msg = Like(user_id=user_id, message_id=message_id)
+        db.session.add(liked_msg)
+
+    db.session.commit()    
 
     return redirect(f'/messages/{message_id}')
     

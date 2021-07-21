@@ -557,7 +557,15 @@ p.card-bio {
   height: 400px; /* only if you want fixed height */
 } 
 
-.like-button{
+.like-button-home{
     background: none; 
     border: none;
+    position: absolute;
+    right: 5px;
+    z-index: 10;
+}
+
+.like-button{
+  background: none; 
+  border: none;
 }

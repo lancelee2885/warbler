@@ -179,8 +179,9 @@ class Message(db.Model):
     user = db.relationship('User')
     
     def is_liked_by(self, user):
-        """check whether the message is liked by a user"""
-        return user.id in [user.id for user in self.users_like]
+        """check whether the message is liked by a user. Return a boolean value..."""
+
+        return user.id in {user.id for user in self.users_like} # O(l*n) > O(l+n)
 
 
 class Like(db.Model):
