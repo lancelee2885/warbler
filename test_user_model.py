@@ -9,6 +9,7 @@ import os
 from unittest import TestCase
 
 from models import db, User, Message, Follows
+from flask_bcrypt import Bcrypt
 
 # BEFORE we import our app, let's set an environmental variable
 # to use a different database for tests (we need to do this
@@ -26,6 +27,7 @@ from app import app
 # and create fresh new clean test data
 
 db.create_all()
+bcrypt = Bcrypt()
 
 
 class UserModelTestCase(TestCase):
@@ -70,9 +72,10 @@ class UserModelTestCase(TestCase):
 
     def test_user_following(self):
         """Tests if the following association between users works"""
+
         follow = Follows(
             user_being_followed_id=self.u2.id,
-             user_following_id=self.u.id)
+            user_following_id=self.u.id)
 
         db.session.add(follow)
         db.session.commit()
@@ -80,6 +83,50 @@ class UserModelTestCase(TestCase):
         #User 1 should be following user 2
         self.assertTrue(self.u.is_following(self.u2))
         self.assertFalse(self.u2.is_following(self.u))
+    
+    def test_user_is_followed_by(self):
+        """Test if is_followed_by function works"""
 
-        
+        follow = Follows(
+            user_being_followed_id=self.u2.id,
+            user_following_id=self.u.id)
+
+        db.session.add(follow)
+        db.session.commit()
+
+        self.assertTrue(self.u2.is_followed_by(self.u))
+        self.assertFalse(self.u.is_followed_by(self.u2))
+
+
+    def test_repr_(self):
+        """Test if __repr__ method works"""
+
+        self.assertEqual(str(self.u), 
+            f"<User #{self.u.id}: {self.u.username}, {self.u.email}>")
+
+    
+    def test_valid_signup(self):
+        """Test if User.signup successfully create a new user given valid credentials"""
+
+        username = "testuser3"
+        email = "testuser3@email.com"
+        password = "HASHED_PASSWORD"
+        image_url = "http://test.jpeg"
+        id = 100000000
+
+        user = User.signup(username, email, password, image_url)
+        user.id = id
+        db.session.commit()
+
+        user = User.query.get(id)
+
+        self.assertEqual(user.username, username)
+        self.assertEqual(user.email, email)
+        self.assertTrue(bcrypt.check_password_hash(user.password, password))
+        self.assertEqual(user.image_url, image_url)
+
+
+    def test_invalid_signup(self):
+        """"""
+        pass
 
