@@ -10,6 +10,7 @@ from unittest import TestCase
 
 from models import db, User, Message, Follows
 from flask_bcrypt import Bcrypt
+from sqlalchemy import exc
 
 # BEFORE we import our app, let's set an environmental variable
 # to use a different database for tests (we need to do this
@@ -127,6 +128,32 @@ class UserModelTestCase(TestCase):
 
 
     def test_invalid_signup(self):
-        """"""
-        pass
+        """Test if signing up with invalid credentials throws an integrity error"""
+        username = "testuser3"
+        email = None
+        password = "HASHED_PASSWORD"
+        image_url = "http://test.jpeg"
 
+        with self.assertRaises(exc.IntegrityError):
+            user = User.signup(username, email, password, image_url)
+            db.session.commit()
+
+    def test_user_authentication(self):
+        """Tests if the user authentication class method correctly works"""
+        self.u.password = bcrypt.generate_password_hash(self.u.password).decode('UTF-8')
+        db.session.commit()
+        user = User.authenticate(self.u.username, "HASHED_PASSWORD")
+
+        self.assertEqual(user, self.u)
+
+    def test_ivalid_user_authentication(self):
+        """tests if user authentication method on invalid username and password"""
+
+        self.u2.password = bcrypt.generate_password_hash(self.u2.password).decode('UTF-8')
+        db.session.commit()
+
+        user = User.authenticate("bazinga", "HASHED_PASSWORD")
+        self.assertFalse(user)
+
+        user = User.authenticate(self.u2.username, "bazinga")
+        self.assertFalse(user)
