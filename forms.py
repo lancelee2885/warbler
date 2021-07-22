@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField
+from wtforms import StringField, PasswordField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired, Email, Length, Optional
 
 
@@ -33,3 +33,7 @@ class UserEditForm(FlaskForm):
     header_image_url = StringField('(Optional) Image URL', validators=[Optional()])
     bio = StringField("Bio", validators=[Optional()])
     password = PasswordField('Password', validators=[Length(min=6)])
+
+class DeletePost(FlaskForm):
+    """Form for deleting posts"""
+    pass

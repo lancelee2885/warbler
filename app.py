@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, flash, redirect, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
-from forms import UserAddForm, LoginForm, MessageForm, UserEditForm
+from forms import UserAddForm, LoginForm, MessageForm, UserEditForm, DeletePost
 from models import db, connect_db, User, Message, Like
 
 CURR_USER_KEY = "curr_user"
@@ -249,21 +249,27 @@ def profile():
     return render_template('users/edit.html', form=form)
     
 
-@app.route('/users/delete', methods=["POST"])
-def delete_user():
+@app.route('/users/<int:user_id>/delete', methods=["POST"])
+def delete_user(user_id):
     """Delete user."""
 
-    # Needs CSRF Protection
     if not g.user:
         flash("Access unauthorized.", "danger")
         return redirect("/")
+        
+    if g.user.id == user_id:
+        do_logout()
 
-    do_logout()
-
-    db.session.delete(g.user)
-    db.session.commit()
-
-    return redirect("/signup")
+        # db.session.empty(g.user.messages)
+        for message in g.user.messages:
+            db.session.delete(message)
+        
+        db.session.delete(g.user)
+        db.session.commit()
+        
+        return redirect("/signup")
+    
+    return redirect("/")
 
 @app.route('/users/<int:user_id>/likes')
 def liked_messages(user_id):
@@ -304,24 +310,30 @@ def messages_add():
 @app.route('/messages/<int:message_id>', methods=["GET"])
 def messages_show(message_id):
     """Show a message."""
-    # breakpoint()
     msg = Message.query.get(message_id)
-    # user_likes = [user.id for user in msg.users_like]
+    
+    form = DeletePost()
+    
     return render_template('messages/show.html',
-        message=msg)
+        msg=msg,
+        form=form)
 
 
 @app.route('/messages/<int:message_id>/delete', methods=["POST"])
 def messages_destroy(message_id):
     """Delete a message."""
 
+    
+    
     if not g.user:
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
     msg = Message.query.get(message_id)
-    db.session.delete(msg)
-    db.session.commit()
+    
+    if g.user.id == msg.user.id:    
+        db.session.delete(msg)
+        db.session.commit()
 
     return redirect(f"/users/{g.user.id}")
 
@@ -361,7 +373,7 @@ def homepage():
     - anon users: no messages
     - logged in: 100 most recent messages of followed_users
     """
-
+    form = DeletePost()
     if g.user:
         following_ids = [followee.id for followee in g.user.following]
         following_ids.append(g.user.id)
@@ -372,7 +384,9 @@ def homepage():
                     .limit(100)
                     .all())
 
-        return render_template('home.html', messages=messages)
+        return render_template('home.html', 
+        messages=messages,
+        form=form)
 
     else:
         return render_template('home-anon.html')
