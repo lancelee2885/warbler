@@ -1,7 +1,10 @@
 """User view tests."""
 
 from unittest import TestCase
-from app import app
+
+from flask.helpers import get_flashed_messages
+from app import app, do_login
+from flask import flash
 from flask_bcrypt import Bcrypt
 from models import db, User, Message, Follows, Like
 from sqlalchemy import exc
@@ -77,5 +80,54 @@ class UserViewTestCase(TestCase):
                     },
                 follow_redirects=False
                 )
+
             self.assertEqual(response.status_code,302)
+
+    def test_list_users_authorized(self):
+        """Test if a logged in user can see the follower / following pages"""
+
+        # user2 following user1
+        follow = Follows(user_being_followed_id=1, user_following_id=2)
+        db.session.add(follow)
+        db.session.commit()
+
+        with self.client as client:
+
+            client.post(
+                '/login',
+                data = {
+                    "username" : self.u.username,
+                    "password" : "password"
+                    },
+                )
+
+            response = client.get("/users/2/following")
+            html = response.get_data(as_text=True)
+
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('<a href="/users/1" class="card-link">' ,html)
+    
+    def test_list_users_unauthorized(self):
+        """Make sure an anon user cannot see the follower / following pages of any users"""
+
+        follow = Follows(user_being_followed_id=1, user_following_id=2)
+        db.session.add(follow)
+        db.session.commit()
+
+        with self.client as client:
+            response = client.get("/users/2/following")
+
+            self.assertEqual(response.location, "http://localhost/")
+            self.assertIn('Access unauthorized.', get_flashed_messages())
+
+            response2 = client.get("/users/2/followers")
+
+            self.assertEqual(response2.location, "http://localhost/")
+            self.assertIn('Access unauthorized.', get_flashed_messages())
+
+
+
+            
+
+
 
