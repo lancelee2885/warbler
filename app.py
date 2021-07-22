@@ -116,7 +116,7 @@ def login():
     return render_template('users/login.html', form=form)
 
 
-@app.route('/logout')
+@app.route('/logout', methods=["POST"])
 def logout():
     """Handle logout of user."""
     
@@ -364,21 +364,24 @@ def messages_destroy(message_id):
 def message_like_or_unlike(message_id):
     """Like/Unlike a message"""
 
-    # Needs CSRF Protection
 
     message = Message.query.get_or_404(message_id)
 
     user_id = g.user.id
 
-    if message.is_liked_by(g.user):
-        like = Like.query.get_or_404((user_id, message_id))
-        db.session.delete(like)
+    if g.csrf_form.validate_on_submit():
+        if message.is_liked_by(g.user):
+            like = Like.query.get_or_404((user_id, message_id))
+            db.session.delete(like)
+
+        else:
+            liked_msg = Like(user_id=user_id, message_id=message_id)
+            db.session.add(liked_msg)
+
+        db.session.commit()
 
     else:
-        liked_msg = Like(user_id=user_id, message_id=message_id)
-        db.session.add(liked_msg)
-
-    db.session.commit()    
+        raise Unauthorized()
 
     return redirect(f'/messages/{message_id}')
     
