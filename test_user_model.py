@@ -40,18 +40,46 @@ class UserModelTestCase(TestCase):
 
         self.client = app.test_client()
 
-    def test_user_model(self):
-        """Does basic model work?"""
-
         u = User(
             email="test@test.com",
             username="testuser",
             password="HASHED_PASSWORD"
         )
 
-        db.session.add(u)
+        u2 = User(
+            email="test2@test.com",
+            username="testuser2",
+            password="HASHED_PASSWORD"
+        )
+
+        self.u = u
+        self.u2 = u2
+
+        db.session.add_all([u, u2])
         db.session.commit()
 
+    def tearDown(self):
+        db.session.rollback()
+
+    def test_user_model(self):
+        """Does basic model work?"""
+
         # User should have no messages & no followers
-        self.assertEqual(len(u.messages), 0)
-        self.assertEqual(len(u.followers), 0)
+        self.assertEqual(len(self.u.messages), 0)
+        self.assertEqual(len(self.u.followers), 0)
+
+    def test_user_following(self):
+        """Tests if the following association between users works"""
+        follow = Follows(
+            user_being_followed_id=self.u2.id,
+             user_following_id=self.u.id)
+
+        db.session.add(follow)
+        db.session.commit()
+
+        #User 1 should be following user 2
+        self.assertTrue(self.u.is_following(self.u2))
+        self.assertFalse(self.u2.is_following(self.u))
+
+        
+
