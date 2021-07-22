@@ -109,7 +109,19 @@ class UserModelTestCase(TestCase):
 
         db.session.add(like)
         db.session.commit()
+        message_ids = [message.id for message in self.u.likes]
+        self.assertIn(like.message_id ,message_ids)
 
-        self.assertIn(like ,self.u.likes)
+    def test_is_liked_by_method(self):
+        """make sure that the method 'is_liked_by()' returns a correct bool"""
 
-    
+        like = Like(
+            user_id = self.u2.id,
+            message_id = self.m_u1.id
+            )
+
+        db.session.add(like)
+        db.session.commit()
+
+        self.assertTrue(self.m_u1.is_liked_by(self.u2))
+        self.assertFalse(self.m_u1.is_liked_by(self.u))
