@@ -1,7 +1,8 @@
 {% if g.user.id != msg.user.id %}
-<form action="/messages/{{message.id}}/like" method="POST">
+<form action="/messages/{{msg.id}}/like" method="POST">
+    {{ form.csrf_token }}
     <button class="like-button-home"><i class=" 
-        {% if message.is_liked_by(g.user) %} fas {% else %} far {% endif %} fa-thumbs-up">
+        {% if msg.is_liked_by(g.user) %} fas {% else %} far {% endif %} fa-thumbs-up">
         </i></button>
 </form>
 {% endif %}

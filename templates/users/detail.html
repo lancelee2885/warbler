@@ -39,7 +39,7 @@
           <div class="ml-auto">
             {% if g.user.id == user.id %}
             <a href="/users/profile" class="btn btn-outline-secondary">Edit Profile</a>
-            <form method="POST" action="/users/delete" class="form-inline">
+            <form method="POST" action="/users/{{g.user.id}}/delete" class="form-inline">
               <button class="btn btn-outline-danger ml-2">Delete Profile</button>
             </form>
             {% elif g.user %}

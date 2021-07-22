@@ -3,35 +3,28 @@
 <div class="col-sm-6">
     <ul class="list-group" id="messages">
 
-        {% for message in user.likes %}
+        {% for msg in user.likes %}
 
         <li class="list-group-item">
 
-            <a href="/messages/{{ message.id }}" class="message-link" />
+            <a href="/messages/{{ msg.id }}" class="message-link" />
 
             <div>
-                <a href="/users/{{ message.user_id }}">
-                    <img src="{{ message.user.image_url }}" alt="user image" class="timeline-image">
+                <a href="/users/{{ msg.user_id }}">
+                    <img src="{{ msg.user.image_url }}" alt="user image" class="timeline-image">
                 </a>
             </div>
 
             <div class="message-area">
-                <a href="/users/{{ message.user.id }}">@{{ message.user.username }}</a>
+                <a href="/users/{{ msg.user.id }}">@{{ msg.user.username }}</a>
                 <span class="text-muted">
-                    {{ message.timestamp.strftime('%d %B %Y') }}
+                    {{ msg.timestamp.strftime('%d %B %Y') }}
                 </span>
-                <p>{{ message.text }}</p>
+                <p>{{ msg.text }}</p>
             </div>
-            {% if g.user.id != message.user.id %}
-            <form action="/messages/{{message.id}}/like" method="POST">
-
-              
-                <button class="like-button-home"><i class=" 
-                    {% if message.is_liked_by(g.user) %} fas {% else %} far {% endif %} fa-thumbs-up">
-                </i></button>
-                
-            </form>
-            {% endif %}
+            
+            {% include '_like_button.html' %}
+            
         </li>
 
         {% endfor %}
