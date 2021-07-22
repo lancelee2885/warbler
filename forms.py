@@ -34,6 +34,6 @@ class UserEditForm(FlaskForm):
     bio = StringField("Bio", validators=[Optional()])
     password = PasswordField('Password', validators=[Length(min=6)])
 
-class DeletePost(FlaskForm):
+class CSRFForm(FlaskForm):
     """Form for deleting posts"""
     pass

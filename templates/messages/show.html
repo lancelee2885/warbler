@@ -16,15 +16,17 @@
             {% if g.user %}
             {% if g.user.id == msg.user.id %}
             <form method="POST" action="/messages/{{ msg.id }}/delete">
-              {{ form.csrf_token }}
+              {{ g.csrf_form.hidden_tag() }}
               <button class="btn btn-outline-danger">Delete</button>
             </form>
             {% elif g.user.is_following(msg.user) %}
             <form method="POST" action="/users/stop-following/{{ msg.user.id }}">
+              {{ g.csrf_form.hidden_tag() }}
               <button class="btn btn-primary">Unfollow</button>
             </form>
             {% else %}
             <form method="POST" action="/users/follow/{{ msg.user.id }}">
+              {{ g.csrf_form.hidden_tag() }}
               <button class="btn btn-outline-primary btn-sm">Follow</button>
             </form>
             {% endif %}

@@ -3,8 +3,9 @@ import os
 from flask import Flask, render_template, request, flash, redirect, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
+from werkzeug.exceptions import Unauthorized
 
-from forms import UserAddForm, LoginForm, MessageForm, UserEditForm, DeletePost
+from forms import UserAddForm, LoginForm, MessageForm, UserEditForm, CSRFForm
 from models import db, connect_db, User, Message, Like
 
 CURR_USER_KEY = "curr_user"
@@ -38,6 +39,12 @@ def add_user_to_g():
 
     else:
         g.user = None
+    
+@app.before_request
+def add_csrf_form_to_g():
+    """add a wtform to g to protect csrf attack"""
+
+    g.csrf_form = CSRFForm()
 
 
 def do_login(user):
@@ -149,9 +156,6 @@ def users_show(user_id):
     
     user = User.query.get_or_404(user_id)
     
-    # for message in user.messages:
-        # user_likes = [user.id for user in message.users_like]
-    
     return render_template('users/show.html', user=user)
 
 
@@ -187,9 +191,14 @@ def add_follow(follow_id):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    followed_user = User.query.get_or_404(follow_id)
-    g.user.following.append(followed_user)
-    db.session.commit()
+    if g.csrf_form.validate_on_submit():
+
+        followed_user = User.query.get_or_404(follow_id)
+        g.user.following.append(followed_user)
+        db.session.commit()
+
+    else:
+        raise Unauthorized()
 
     return redirect(f"/users/{g.user.id}/following")
 
@@ -202,9 +211,14 @@ def stop_following(follow_id):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    followed_user = User.query.get(follow_id)
-    g.user.following.remove(followed_user)
-    db.session.commit()
+    if g.csrf_form.validate_on_submit():
+
+        followed_user = User.query.get(follow_id)
+        g.user.following.remove(followed_user)
+        db.session.commit()
+
+    else:
+        raise Unauthorized()
 
     return redirect(f"/users/{g.user.id}/following")
 
@@ -257,10 +271,12 @@ def delete_user(user_id):
         flash("Access unauthorized.", "danger")
         return redirect("/")
         
-    if g.user.id == user_id:
-        do_logout()
+    if g.csrf_form.validate_on_submit():
 
-        # db.session.empty(g.user.messages)
+        if g.user.id == user_id:
+
+            do_logout()
+
         for message in g.user.messages:
             db.session.delete(message)
         
@@ -268,8 +284,10 @@ def delete_user(user_id):
         db.session.commit()
         
         return redirect("/signup")
+
+    else:
+        raise Unauthorized()
     
-    return redirect("/")
 
 @app.route('/users/<int:user_id>/likes')
 def liked_messages(user_id):
@@ -307,16 +325,14 @@ def messages_add():
     return render_template('messages/new.html', form=form)
 
 
-@app.route('/messages/<int:message_id>', methods=["GET"])
+@app.route('/messages/<int:message_id>')
 def messages_show(message_id):
     """Show a message."""
+
     msg = Message.query.get(message_id)
     
-    form = DeletePost()
-    
     return render_template('messages/show.html',
-        msg=msg,
-        form=form)
+        msg=msg)
 
 
 @app.route('/messages/<int:message_id>/delete', methods=["POST"])
@@ -324,18 +340,24 @@ def messages_destroy(message_id):
     """Delete a message."""
 
     
-    
     if not g.user:
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
     msg = Message.query.get(message_id)
     
-    if g.user.id == msg.user.id:    
-        db.session.delete(msg)
-        db.session.commit()
+    if g.csrf_form.validate_on_submit():
 
-    return redirect(f"/users/{g.user.id}")
+        if g.user.id == msg.user.id:    
+            db.session.delete(msg)
+            db.session.commit()
+
+        return redirect(f"/users/{g.user.id}")
+
+    else:
+        raise Unauthorized()
+
+
 
 
 @app.route('/messages/<int:message_id>/like', methods=["POST"])
@@ -373,7 +395,7 @@ def homepage():
     - anon users: no messages
     - logged in: 100 most recent messages of followed_users
     """
-    form = DeletePost()
+
     if g.user:
         following_ids = [followee.id for followee in g.user.following]
         following_ids.append(g.user.id)
@@ -385,8 +407,7 @@ def homepage():
                     .all())
 
         return render_template('home.html', 
-        messages=messages,
-        form=form)
+        messages=messages)
 
     else:
         return render_template('home-anon.html')
