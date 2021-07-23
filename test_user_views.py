@@ -168,3 +168,27 @@ class UserViewTestCase(TestCase):
             self.assertEqual(response.status_code, 302)
             self.assertEqual(response.location, f"http://localhost/users/{self.u.id}")
             self.assertNotIn("TestMessage1", list_of_warbles)
+
+    
+    def test_create_other_user_message(self):
+        """make sure creating a message for other user doesn't work"""
+
+        with self.client as client:
+
+            client.post(
+                '/login',
+                data = {
+                    "username" : self.u.username,
+                    "password" : "password"
+                    }
+                )
+
+        list_of_warbles_of_user2 = {message.text for message in Message.query.filter_by(user_id=2)}
+
+        response = client.post(
+                '/messages/new',
+                data = { "text" : "test1234jdfhjkqhfjkew", "user_id" : "2"})
+
+        self.assertEqual(response.status_code, 302)
+        self.assertNotIn("test1234jdfhjkqhfjkew", list_of_warbles_of_user2)
+
