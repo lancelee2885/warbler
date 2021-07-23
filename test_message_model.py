@@ -85,7 +85,10 @@ class UserModelTestCase(TestCase):
 
 
     def test_message_model(self):
-        """Test basic message model"""
+        """Test basic message model
+        Add second message to user 1 and 
+        test that the message was created
+        """
 
         m = Message(
             text = "TestMessage1",
@@ -106,15 +109,17 @@ class UserModelTestCase(TestCase):
             user_id = self.u.id,
             message_id = self.m_u2.id
             )
+        #user.likes.append(self.m_u2)
 
         db.session.add(like)
         db.session.commit()
         message_ids = [message.id for message in self.u.likes]
         self.assertIn(like.message_id ,message_ids)
+        #can just test length of likes since setup always has 0 likes
 
     def test_is_liked_by_method(self):
         """make sure that the method 'is_liked_by()' returns a correct bool"""
-
+        breakpoint()
         like = Like(
             user_id = self.u2.id,
             message_id = self.m_u1.id

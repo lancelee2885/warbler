@@ -77,6 +77,8 @@ class UserModelTestCase(TestCase):
         follow = Follows(
             user_being_followed_id=self.u2.id,
             user_following_id=self.u.id)
+        # breakpoint()
+        # self.u2.following.append(self.u)
 
         db.session.add(follow)
         db.session.commit()
@@ -128,7 +130,7 @@ class UserModelTestCase(TestCase):
 
 
     def test_invalid_signup(self):
-        """Test if signing up with invalid credentials throws an integrity error"""
+        """Test if signing up with an invalid email throws an integrity error"""
         username = "testuser3"
         email = None
         password = "HASHED_PASSWORD"
@@ -147,7 +149,7 @@ class UserModelTestCase(TestCase):
         self.assertEqual(user, self.u)
 
     def test_ivalid_user_authentication(self):
-        """tests if user authentication method on invalid username and password"""
+        """tests invalid username and password on authenticate method"""
 
         self.u2.password = bcrypt.generate_password_hash(self.u2.password).decode('UTF-8')
         db.session.commit()
