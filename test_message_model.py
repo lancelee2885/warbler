@@ -105,28 +105,17 @@ class UserModelTestCase(TestCase):
     def test_like_message(self):
         """Test if like association works"""
 
-        like = Like(
-            user_id = self.u.id,
-            message_id = self.m_u2.id
-            )
-        #user.likes.append(self.m_u2)
-
-        db.session.add(like)
+        self.u.likes.append(self.m_u2)
         db.session.commit()
-        message_ids = [message.id for message in self.u.likes]
-        self.assertIn(like.message_id ,message_ids)
-        #can just test length of likes since setup always has 0 likes
+
+        self.assertEqual(len(self.u.likes), 1)
+        self.assertEqual(self.u.likes[0], self.m_u2)
 
     def test_is_liked_by_method(self):
         """make sure that the method 'is_liked_by()' returns a correct bool"""
-        breakpoint()
-        like = Like(
-            user_id = self.u2.id,
-            message_id = self.m_u1.id
-            )
 
-        db.session.add(like)
+        self.u2.likes.append(self.m_u1)
         db.session.commit()
-
+        
         self.assertTrue(self.m_u1.is_liked_by(self.u2))
         self.assertFalse(self.m_u1.is_liked_by(self.u))

@@ -85,26 +85,6 @@ class MessageViewTestCase(TestCase):
         """Clean up the database after every test"""
         db.session.rollback()
 
-    def test_add_message(self):
-        """Can use add a message?"""
-
-        # Since we need to change the session to mimic logging in,
-        # we need to use the changing-session trick:
-
-        with self.client as c:
-            with c.session_transaction() as sess:
-                sess[CURR_USER_KEY] = self.u.id
-
-            # Now, that session setting is saved, so we can have
-            # the rest of ours test
-
-            resp = c.post("/messages/new", data={"text": "Hello"})
-
-            # Make sure it redirects
-            self.assertEqual(resp.status_code, 302)
-
-            msg = Message.query.filter_by(text="Hello").one()
-            self.assertEqual(msg.text, "Hello")
 
     def test_create_other_user_message(self):
         """make sure creating a message for other user doesn't work"""
@@ -119,18 +99,28 @@ class MessageViewTestCase(TestCase):
                     }
                 )
 
+
         set_of_warbles_of_user2 = {message.text for message in Message.query.filter_by(user_id=2)}
 
         response = client.post(
                 '/messages/new',
                 data = { "text" : "test1234jdfhjkqhfjkew", "user_id" : "2"})
 
-        self.assertEqual(response.status_code, 302)
         #Check self.u2.messages instead
+        self.assertEqual(response.status_code, 302)
         self.assertNotIn("test1234jdfhjkqhfjkew", set_of_warbles_of_user2)
+
         
     def test_create_own_message(self):
         """as a user, test create a message for themself"""
+
+    
+        # another way to log users in
+        # with self.client as c:
+        #     with c.session_transaction() as sess:
+        #         sess[CURR_USER_KEY] = self.u.id
+
+
         with self.client as client:
 
             client.post(
@@ -189,7 +179,7 @@ class MessageViewTestCase(TestCase):
 
         with self.client as client:
         
-            response = client.post(f'/messages/new')
+            response = client.post('/messages/new')
             
             self.assertEqual(response.status_code, 302)
             self.assertEqual(response.location, "http://localhost/")

@@ -116,14 +116,17 @@ class UserViewTestCase(TestCase):
                     "password" : "password"
                     },
                 follow_redirects=False)
+
             self.assertEqual(response.status_code,302)
+            self.assertIn(f"Hello, {self.u.username}!", get_flashed_messages())
 
     def test_followers_following_list_authorized(self):
         """Test if a logged in user can see the follower / following pages"""
 
         # user2 following user1
-        follow = Follows(user_being_followed_id=1, user_following_id=2)
-        db.session.add(follow)
+        # follow = Follows(user_being_followed_id=1, user_following_id=2)
+
+        self.u2.following.append(self.u)
         db.session.commit()
 
         with self.client as client:
@@ -140,20 +143,18 @@ class UserViewTestCase(TestCase):
             html = response.get_data(as_text=True)
 
             self.assertEqual(response.status_code, 200)
-            #check for self.u's username instead of the html
-            self.assertIn('<a href="/users/1" class="card-link">' ,html)
+            self.assertIn('"/users/1"' ,html)
             
             response = client.get("/users/1/followers")
             html = response.get_data(as_text=True)
 
             self.assertEqual(response.status_code, 200)
-            self.assertIn('<a href="/users/2" class="card-link">' ,html)
+            self.assertIn('"/users/2"' ,html)
     
     def test_followers_following_list_unauthorized(self):
         """Make sure an anon user cannot see the follower / following pages of any users"""
 
-        follow = Follows(user_being_followed_id=1, user_following_id=2)
-        db.session.add(follow)
+        self.u2.following.append(self.u)
         db.session.commit()
 
         with self.client as client:
