@@ -2,7 +2,8 @@ import os
 
 from flask import Flask, render_template, request, flash, redirect, session, g
 from flask_debugtoolbar import DebugToolbarExtension
-from sqlalchemy.exc import IntegrityError
+# from sqlalchemy.exc import IntegrityError
+from sqlalchemy import exc
 from werkzeug.exceptions import Unauthorized
 
 from forms import UserAddForm, LoginForm, MessageForm, UserEditForm, CSRFForm
@@ -71,9 +72,10 @@ def signup():
     If the there already is a user with that username: flash message
     and re-present form.
     """
+    # breakpoint()
 
     form = UserAddForm()
-
+    
     if form.validate_on_submit():
         try:
             user = User.signup(
@@ -84,9 +86,11 @@ def signup():
             )
             db.session.commit()
 
-        except IntegrityError:
+        except exc.IntegrityError:
+            db.session.rollback()
             flash("Username already taken", 'danger')
             return render_template('users/signup.html', form=form)
+
 
         do_login(user)
 

@@ -1,5 +1,9 @@
 """User view tests."""
 
+import os
+os.environ['DATABASE_URL'] = "postgresql:///warbler-test"
+
+
 from unittest import TestCase
 
 from flask.helpers import get_flashed_messages
@@ -9,8 +13,8 @@ from flask_bcrypt import Bcrypt
 from models import db, User, Message, Follows, Like
 from sqlalchemy import exc
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///warbler-test'
-app.config['SQLALCHEMY_ECHO'] = False
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///warbler-test'
+# app.config['SQLALCHEMY_ECHO'] = False
 app.config['TESTING'] = True
 app.config['WTF_CSRF_ENABLED'] = False
 
@@ -66,7 +70,40 @@ class UserViewTestCase(TestCase):
 
     def tearDown(self):
         """Clean up the database after every test"""
+
         db.session.rollback()
+
+    def test_sign_up(self):
+        """Test if a user can sign up"""
+
+        with self.client as client:
+            
+            # testing a valid signup
+            response = client.post(
+                '/signup',
+                data = {
+                    "username" : "testuser3",
+                    "password" : "password",
+                    "email" : "testuser3@email.com",
+                    "image_url" : "http://test.jpeg"
+                    },
+                follow_redirects=False)
+            
+            self.assertEqual(response.status_code, 302)
+        
+            client.post(
+                '/signup',
+                data = {
+                    "username" : "testuser3",
+                    "password" : "password",
+                    "email" : "testuser34123@email.com",
+                    "image_url" : "http://test.jpeg"
+                    },
+                follow_redirects=False)
+
+            self.assertIn("Username already taken", get_flashed_messages())
+
+        
 
     def test_logging_in(self):
         """Make sure that a user with correct username/pass can log in and vice versa"""
@@ -78,9 +115,7 @@ class UserViewTestCase(TestCase):
                     "username" : self.u.username,
                     "password" : "password"
                     },
-                follow_redirects=False
-                )
-
+                follow_redirects=False)
             self.assertEqual(response.status_code,302)
 
     def test_list_users_authorized(self):
