@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, request, flash, redirect, session, g
+from flask import Flask, render_template, request, flash, redirect, session, jsonify, g
 from flask_debugtoolbar import DebugToolbarExtension
 # from sqlalchemy.exc import IntegrityError
 from sqlalchemy import exc
@@ -377,7 +377,6 @@ def message_like_or_unlike(message_id):
         if message.is_liked_by(g.user):
             like = Like.query.get_or_404((user_id, message_id))
             db.session.delete(like)
-
         else:
             liked_msg = Like(user_id=user_id, message_id=message_id)
             db.session.add(liked_msg)
@@ -387,7 +386,11 @@ def message_like_or_unlike(message_id):
     else:
         raise Unauthorized()
 
-    return redirect(f'/messages/{message_id}')
+    # return redirect(f'/messages/{message_id}')
+    # breakpoint()
+    message = message.serialize()
+    
+    return jsonify(message)
     
 
 
