@@ -52,7 +52,7 @@ class UserViewTestCase(TestCase):
         ) 
 
         m_u2 = Message(
-            text = "TestMessage1",
+            text = "TestMessage2",
             user_id = u2.id
         )
 
@@ -107,7 +107,7 @@ class UserViewTestCase(TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertIn('<a href="/users/1" class="card-link">' ,html)
     
-    def test_list_users_unauthorized(self):
+    def test_followers_following_list_unauthorized(self):
         """Make sure an anon user cannot see the follower / following pages of any users"""
 
         follow = Follows(user_being_followed_id=1, user_following_id=2)
@@ -126,8 +126,45 @@ class UserViewTestCase(TestCase):
             self.assertIn('Access unauthorized.', get_flashed_messages())
 
 
+    def test_create_own_message(self):
+        """as a user, test create a message for themself"""
+        with self.client as client:
 
-            
+            client.post(
+                '/login',
+                data = {
+                    "username" : self.u.username,
+                    "password" : "password"
+                    }
+                )
 
+            response = client.post(
+                '/messages/new',
+                data = { "text" : "test1234jdfhjkqhfjkew" },
+                follow_redirects=True)
 
+            html = response.get_data(as_text=True)
 
+            self.assertEqual(response.status_code, 200)
+            self.assertIn("test1234jdfhjkqhfjkew", html)
+
+    def test_delete_own_message(self):
+        """as a user, test delete a message for themself"""
+
+        with self.client as client:
+
+            client.post(
+                '/login',
+                data = {
+                    "username" : self.u.username,
+                    "password" : "password"
+                    }
+                )
+
+            response = client.post(f'/messages/{self.m_u1.id}/delete')
+
+            list_of_warbles = {message.text for message in Message.query.all()}
+
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(response.location, f"http://localhost/users/{self.u.id}")
+            self.assertNotIn("TestMessage1", list_of_warbles)
