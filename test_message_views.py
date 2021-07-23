@@ -78,6 +78,7 @@ class MessageViewTestCase(TestCase):
 
         self.u = u
         self.u2 = u2
+        self.u2_id = u2.id
         self.m_u1 = m_u1
         self.m_u2 = m_u2
         
@@ -99,16 +100,14 @@ class MessageViewTestCase(TestCase):
                     }
                 )
 
-
-        set_of_warbles_of_user2 = {message.text for message in Message.query.filter_by(user_id=2)}
-
         response = client.post(
                 '/messages/new',
                 data = { "text" : "test1234jdfhjkqhfjkew", "user_id" : "2"})
 
-        #Check self.u2.messages instead
+        msgs = Message.query.filter_by(user_id=1).all()
+
         self.assertEqual(response.status_code, 302)
-        self.assertNotIn("test1234jdfhjkqhfjkew", set_of_warbles_of_user2)
+        self.assertEqual(len(msgs), 2)
 
         
     def test_create_own_message(self):
@@ -156,12 +155,11 @@ class MessageViewTestCase(TestCase):
 
             response = client.post(f'/messages/{self.m_u1.id}/delete')
 
-            list_of_warbles = {message.text for message in Message.query.all()}
+            msgs = Message.query.filter_by(user_id=1).all()
 
             self.assertEqual(response.status_code, 302)
             self.assertEqual(response.location, f"http://localhost/users/{self.u.id}")
-            #use self.u.messages instead of the set
-            self.assertNotIn("TestMessage1", list_of_warbles)
+            self.assertEqual(len(msgs), 0)
 
     def test_delete_message_not_logged_in(self):
         """as an anonymous user, test deleting a message"""
