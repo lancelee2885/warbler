@@ -182,6 +182,16 @@ class Message(db.Model):
         """check whether the message is liked by a user. Return a boolean value..."""
 
         return user.id in {user.id for user in self.users_like} # O(l*n) > O(l+n)
+        
+    def serialize(self):
+        """returns the instance as a python dictionary"""
+        return {
+            "id" : self.id,
+            "text" : self.text,
+            "timestamp" : self.timestamp,
+            "user_id" : self.user_id,
+            "users_like" : [user.id for user in self.users_like]
+        }
 
 
 class Like(db.Model):
