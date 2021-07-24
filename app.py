@@ -9,6 +9,10 @@ from werkzeug.exceptions import Unauthorized
 from forms import UserAddForm, LoginForm, MessageForm, UserEditForm, CSRFForm
 from models import db, connect_db, User, Message, Like
 
+database_url = os.environ.get('DATABASE_URL', 'postgresql:///warbler')
+# fix incorrect database URIs currently returned by Heroku's pg setup
+database_url = database_url.replace('postgres://', 'postgresql://')
+
 CURR_USER_KEY = "curr_user"
 
 app = Flask(__name__)
