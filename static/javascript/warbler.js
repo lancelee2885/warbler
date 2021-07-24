@@ -4,8 +4,8 @@ const BASE_URL = "http://localhost:5000";
 async function likeClickHandler(evt){
     evt.preventDefault();
     let messageId = $(evt.target).attr("id");
-    let csrfToken = $(evt.target).parent.val()
-    
+    let csrfToken = $(evt.target).find("input").val()
+    // console.log($(evt.target))
     const response = await axios({
       url: `${BASE_URL}/messages/${messageId}/like`,
       method: "POST",
@@ -14,14 +14,11 @@ async function likeClickHandler(evt){
       }
     });
 
-
+    $(evt.target).find("i").toggleClass("fas far");
     
-    console.log(response);
 
-    return false
+    return false;
 }
 
 
 $(".container").on("submit", ".like-btn-form", likeClickHandler);
-
-//csrf_token: IjliYzM0ODljNTBhZjc3YzczYzlkYWZiNjNkZDg0NGJkYTU2ZjJmYjgi.YPtWvQ.UX0VgYVAT022lymMuGzCbU79zZg
