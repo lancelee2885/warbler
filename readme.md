@@ -57,4 +57,4 @@ A fully written documentation can be found [here](https://lancelee2885.github.io
 
 ## Authors
 
-This project is authored by [Lance Lee](https://github.com/lancelee2885) and Ivan Yang(https://github.com/magus0)
+This project is authored by [Lance Lee](https://github.com/lancelee2885) and [Ivan Yang](https://github.com/magus0)
