@@ -14,7 +14,7 @@ You can view a deployed version [here](https://warbler-ivan-lance.herokuapp.com/
 
 ## Documentation
 
-A fully written documentation can be found [here](https://lancelee2885.github.io/warbler/docs/_build/html)
+A fully written documentation can be found [here](https://lancelee2885.github.io/warbler)
 
 <br>
 

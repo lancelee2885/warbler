@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Warbler’s documentation! &mdash; Warbler  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> Warbler
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to Warbler’s documentation!</a><ul>
+<li><a class="reference internal" href="#module-app">App</a></li>
+<li><a class="reference internal" href="#module-models">Model</a></li>
+<li><a class="reference internal" href="#module-forms">Form</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Warbler</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Welcome to Warbler’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-warbler-s-documentation">
+<h1>Welcome to Warbler’s documentation!<a class="headerlink" href="#welcome-to-warbler-s-documentation" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="module-app">
+<span id="app"></span><h2>App<a class="headerlink" href="#module-app" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.add_csrf_form_to_g">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">add_csrf_form_to_g</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.add_csrf_form_to_g" title="Permalink to this definition"></a></dt>
+<dd><p>add a wtform to g to protect csrf attack</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.add_follow">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">add_follow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">follow_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.add_follow" title="Permalink to this definition"></a></dt>
+<dd><p>Add a follow for the currently-logged-in user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.add_header">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">add_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.add_header" title="Permalink to this definition"></a></dt>
+<dd><p>Add non-caching headers on every request.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.add_user_to_g">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">add_user_to_g</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.add_user_to_g" title="Permalink to this definition"></a></dt>
+<dd><p>If we’re logged in, add curr user to Flask global.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.delete_user">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">delete_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.delete_user" title="Permalink to this definition"></a></dt>
+<dd><p>Delete user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.do_login">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">do_login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.do_login" title="Permalink to this definition"></a></dt>
+<dd><p>Log in user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.do_logout">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">do_logout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.do_logout" title="Permalink to this definition"></a></dt>
+<dd><p>Logout user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.homepage">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">homepage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.homepage" title="Permalink to this definition"></a></dt>
+<dd><p>Show homepage:</p>
+<ul class="simple">
+<li><p>anon users: no messages</p></li>
+<li><p>logged in: 100 most recent messages of followed_users</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.liked_messages">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">liked_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.liked_messages" title="Permalink to this definition"></a></dt>
+<dd><p>Display all messages that are liked by current user</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.list_users">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">list_users</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.list_users" title="Permalink to this definition"></a></dt>
+<dd><p>Page with listing of users.</p>
+<p>Can take a ‘q’ param in querystring to search by that username.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.login">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.login" title="Permalink to this definition"></a></dt>
+<dd><p>Handle user login.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.logout">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">logout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.logout" title="Permalink to this definition"></a></dt>
+<dd><p>Handle logout of user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.message_like_or_unlike">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">message_like_or_unlike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.message_like_or_unlike" title="Permalink to this definition"></a></dt>
+<dd><p>Like/Unlike a message</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.messages_add">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">messages_add</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.messages_add" title="Permalink to this definition"></a></dt>
+<dd><p>Add a message:</p>
+<p>Show form if GET. If valid, update message and redirect to user page.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.messages_destroy">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">messages_destroy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.messages_destroy" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a message.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.messages_show">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">messages_show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.messages_show" title="Permalink to this definition"></a></dt>
+<dd><p>Show a message.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.profile">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.profile" title="Permalink to this definition"></a></dt>
+<dd><p>Update profile for current user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.show_following">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">show_following</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.show_following" title="Permalink to this definition"></a></dt>
+<dd><p>Show list of people this user is following.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.signup">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">signup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.signup" title="Permalink to this definition"></a></dt>
+<dd><p>Handle user signup.</p>
+<p>Create new user and add to DB. Redirect to home page.</p>
+<p>If form not valid, present form.</p>
+<p>If the there already is a user with that username: flash message
+and re-present form.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.stop_following">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">stop_following</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">follow_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.stop_following" title="Permalink to this definition"></a></dt>
+<dd><p>Have currently-logged-in-user stop following this user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.users_followers">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">users_followers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.users_followers" title="Permalink to this definition"></a></dt>
+<dd><p>Show list of followers of this user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.users_show">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">users_show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.users_show" title="Permalink to this definition"></a></dt>
+<dd><p>Show user profile.</p>
+</dd></dl>
+
+</section>
+<section id="module-models">
+<span id="model"></span><h2>Model<a class="headerlink" href="#module-models" title="Permalink to this headline"></a></h2>
+<p>SQLAlchemy models for Warbler.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="models.Follows">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">Follows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.Follows" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>Connection of a follower &lt;-&gt; followed_user.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.Like">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">Like</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.Like" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>Like association between users and messages.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.Message">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">Message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.Message" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>An individual message (“warble”).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="models.Message.is_liked_by">
+<span class="sig-name descname"><span class="pre">is_liked_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.Message.is_liked_by" title="Permalink to this definition"></a></dt>
+<dd><p>check whether the message is liked by a user. Return a boolean value…</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.Message.serialize">
+<span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#models.Message.serialize" title="Permalink to this definition"></a></dt>
+<dd><p>returns the instance as a python dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="models.User">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.User" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>User in the system.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="models.User.authenticate">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.User.authenticate" title="Permalink to this definition"></a></dt>
+<dd><p>Find user with <cite>username</cite> and <cite>password</cite>.</p>
+<p>This is a class method (call it on the class, not an individual user.)
+It searches for a user whose password hash matches this password
+and, if it finds such a user, returns that user object.</p>
+<p>If can’t find matching user (or if password is wrong), returns False.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.User.is_followed_by">
+<span class="sig-name descname"><span class="pre">is_followed_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.User.is_followed_by" title="Permalink to this definition"></a></dt>
+<dd><p>Is this user followed by <cite>other_user</cite>?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.User.is_following">
+<span class="sig-name descname"><span class="pre">is_following</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.User.is_following" title="Permalink to this definition"></a></dt>
+<dd><p>Is this user following <cite>other_user</cite>?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.User.signup">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">signup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.User.signup" title="Permalink to this definition"></a></dt>
+<dd><p>Sign up user.</p>
+<p>Hashes password and adds user to system.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.connect_db">
+<span class="sig-prename descclassname"><span class="pre">models.</span></span><span class="sig-name descname"><span class="pre">connect_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.connect_db" title="Permalink to this definition"></a></dt>
+<dd><p>Connect this database to provided Flask app.</p>
+<p>You should call this in your Flask app.</p>
+</dd></dl>
+
+</section>
+<section id="module-forms">
+<span id="form"></span><h2>Form<a class="headerlink" href="#module-forms" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="forms.CSRFForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">forms.</span></span><span class="sig-name descname"><span class="pre">CSRFForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#forms.CSRFForm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form for deleting posts</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="forms.LoginForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">forms.</span></span><span class="sig-name descname"><span class="pre">LoginForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#forms.LoginForm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Login form.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="forms.MessageForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">forms.</span></span><span class="sig-name descname"><span class="pre">MessageForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#forms.MessageForm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form for adding/editing messages.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="forms.UserAddForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">forms.</span></span><span class="sig-name descname"><span class="pre">UserAddForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#forms.UserAddForm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form for adding users.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="forms.UserEditForm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">forms.</span></span><span class="sig-name descname"><span class="pre">UserEditForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#forms.UserEditForm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Form for editing users.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Lance Lee and Ivan Yang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
