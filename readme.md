@@ -10,9 +10,13 @@ For this project I have:
 
 You can view a deployed version [here](https://warbler-ivan-lance.herokuapp.com/).
 
+<br>
+
 ## Documentation
 
 A fully written documentation can be found [here](https://lancelee2885.github.io/warbler/docs/_build/html)
+
+<br>
 
 ## Installation and Setup Instructions
 
@@ -27,12 +31,16 @@ A fully written documentation can be found [here](https://lancelee2885.github.io
 4. Start the server
     * `flask run`
 
+<br>
+
 ## Testing:
 1. Create the database
     * `createdb warbler-test`
 2. Run tests:
     * To run all: `python3 -m unittest`
     * To run specific file: `python3 -m unittest test_file_to_run.py`
+
+<br>
 
 ## Technologies Used
 
@@ -44,6 +52,8 @@ A fully written documentation can be found [here](https://lancelee2885.github.io
   system
 * [SQLAlchemy](https://www.sqlalchemy.org/) - database ORM
 * [Jinja](https://palletsprojects.com/p/jinja/) - templating engine 
+
+<br>
 
 ## Authors
 
