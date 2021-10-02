@@ -3,13 +3,32 @@
 
 Welcome to Warbler's documentation!
 ===================================
-
-.. automodule:: models
-    :members:
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+App
+------------------
+.. automodule:: app
+   :members:
+   :show-inheritance:
+
+Model
+------------------
+
+
+.. automodule:: models
+   :members:
+   :show-inheritance:
+
+
+Form
+------------------
+
+
+.. automodule:: forms
+   :members:
+   :show-inheritance:
 
 
 
