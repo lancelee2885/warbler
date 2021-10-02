@@ -10,6 +10,10 @@ For this project I have:
 
 You can view a deployed version [here](https://warbler-ivan-lance.herokuapp.com/).
 
+## Documentation
+
+A fully written documentation can be found [here](https://lancelee2885.github.io/warbler/docs/_build/html)
+
 ## Installation and Setup Instructions
 
 1. Clone this repository
@@ -23,7 +27,7 @@ You can view a deployed version [here](https://warbler-ivan-lance.herokuapp.com/
 4. Start the server
     * `flask run`
 
-### Testing:
+## Testing:
 1. Create the database
     * `createdb warbler-test`
 2. Run tests:
