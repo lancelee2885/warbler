@@ -5,6 +5,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 # from sqlalchemy.exc import IntegrityError
 from sqlalchemy import exc
 from werkzeug.exceptions import Unauthorized
+from flask_cors import CORS
 
 from forms import UserAddForm, LoginForm, MessageForm, UserEditForm, CSRFForm
 from models import db, connect_db, User, Message, Like
@@ -16,6 +17,8 @@ database_url = database_url.replace('postgres://', 'postgresql://')
 CURR_USER_KEY = "curr_user"
 
 app = Flask(__name__)
+cors = CORS(app)
+
 
 # Get DB_URI from environ variable (useful for production/testing) or,
 # if not set there, use development local db.
@@ -51,6 +54,7 @@ def add_csrf_form_to_g():
     """add a wtform to g to protect csrf attack"""
 
     g.csrf_form = CSRFForm()
+    print(g.csrf_form.hidden_tag())
 
 
 def do_login(user):
@@ -373,10 +377,13 @@ def messages_destroy(message_id):
 def message_like_or_unlike(message_id):
     """Like/Unlike a message"""
 
-
     message = Message.query.get_or_404(message_id)
 
-    user_id = g.user.id
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    else:
+        user_id = g.user.id
 
     if g.csrf_form.validate_on_submit():
         if message.is_liked_by(g.user):

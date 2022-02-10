@@ -1,5 +1,6 @@
 "use strict";
-const BASE_URL = "http://localhost:5000";
+const GET_URL = window.location;
+const BASE_URL = GET_URL.protocol + "//" + GET_URL.host + "/" + GET_URL.pathname.split('/')[0];
 
 async function likeClickHandler(evt){
     evt.preventDefault();

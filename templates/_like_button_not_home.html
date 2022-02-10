@@ -1,7 +1,7 @@
 {% if g.user.id != msg.user.id %}
 <form class="like-btn-form" id="{{msg.id}}" action="/messages/{{msg.id}}/like" method="POST">
     {{ g.csrf_form.hidden_tag() }}
-    <button class="like-button" ><i class=" 
+    <button type="submit" class="like-button" ><i class=" 
         {% if msg.is_liked_by(g.user) %} fas {% else %} far {% endif %} fa-thumbs-up">
         </i></button>
 </form>
